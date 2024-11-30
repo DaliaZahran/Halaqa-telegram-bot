@@ -17,6 +17,14 @@ load_dotenv()
 
 # Get tokens and keys from environment variables
 TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+
+# Ensure TOKEN is loaded
+if TOKEN:
+    print("Token loaded successfully")
+else:
+    print("Failed to load token. Check Railway environment settings.")
+    
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 

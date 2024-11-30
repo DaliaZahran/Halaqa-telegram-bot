@@ -1,0 +1,5 @@
+python-telegram-bot==21.7
+requests==2.28.1
+aiohttp
+python-dotenv
+oci==2.90.0

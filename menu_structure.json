@@ -1,0 +1,28 @@
+{
+  "القرآن الكريم": {
+    "التجويد": {
+      "النون الساكنة والتنوين": {
+        "الشرح": {
+          "file_id": "https://sjsufaoicdelfkmxbvhw.supabase.co/storage/v1/object/sign/bot-files/pdfs/9.pdf?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJib3QtZmlsZXMvcGRmcy85LnBkZiIsImlhdCI6MTczMjk1Mzk0MSwiZXhwIjo0ODg2NTUzOTQxfQ.vXJZfWcDwqeR-qQvtn-7WuCo9XigebKvsmp4Fm09Spg&t=2024-11-30T08%3A05%3A41.545Z",
+          "description": "شرح درس النون الساكنة والتنوين",
+          "type": "document"
+        },
+        "الأسئلة": {
+          "file_id": "https://your-supabase-url.supabase.co/storage/v1/object/sign/your-file-path/أسئلة.pdf?token=your-token",
+          "description": "أسئلة عن النون الساكنة والتنوين",
+          "type": "document"
+        },
+        "تسجيل صوتي": {
+          "file_id": "https://sjsufaoicdelfkmxbvhw.supabase.co/storage/v1/object/sign/bot-files/pdfs/heartbeat-loop-96879.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJib3QtZmlsZXMvcGRmcy9oZWFydGJlYXQtbG9vcC05Njg3OS5tcDMiLCJpYXQiOjE3MzI5NTM5NTksImV4cCI6NDg4NjU1Mzk1OX0.7EWF9flen4mvTxxGJmO7RdCwoE0TIMd8gTdv5a9AMIo&t=2024-11-30T08%3A05%3A59.161Z",
+          "description": "تسجيل صوتي للدرس",
+          "type": "audio"
+        },
+        "تدريب ١": {
+          "link": "https://example.com/important-resource",
+          "description": "تدريب ١"
+        }
+      }
+    }
+  }
+}
+

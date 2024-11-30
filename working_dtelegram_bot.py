@@ -1,5 +1,5 @@
 import os
-from constants import TOKEN, SUPABASE_URL, SUPABASE_KEY
+# from constants import TOKEN, SUPABASE_URL, SUPABASE_KEY
 from typing import List, Union, Dict, Optional, Any
 import requests
 
@@ -9,6 +9,16 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import logging
 import json
 from pathlib import Path
+from dotenv import load_dotenv
+
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get tokens and keys from environment variables
+TOKEN = os.getenv('TELEGRAM_TOKEN')
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 
 # Enable logging
 logging.basicConfig(

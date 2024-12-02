@@ -162,7 +162,8 @@ class FileHandler:
         update: Update, 
         file_url: str, 
         description: str = '', 
-        file_type: Optional[str] = None
+        file_type: Optional[str] = None,
+        custom_filename: Optional[str] = None
     ) -> bool:
         """
         Send a file from a given URL
@@ -171,6 +172,7 @@ class FileHandler:
         :param file_url: URL of the file to send
         :param description: Optional description for the file
         :param file_type: Optional file type (audio, document, etc.)
+        :param custom_filename: Optional custom filename to use
         :return: True if file sent successfully, False otherwise
         """
         try:
@@ -194,10 +196,18 @@ class FileHandler:
                     else:
                         file_type = 'document'
                 
-                # Create a unique temp file name
-                user_id = update.effective_user.id
+                # Determine file extension
                 file_ext = os.path.splitext(clean_url)[1] or '.pdf'
-                temp_file_path = CACHE_DIR / f"{user_id}_temp{file_ext}"
+                
+                # Use custom filename if provided, otherwise generate a temp filename
+                user_id = update.effective_user.id
+                if custom_filename:
+                    # Ensure the filename has the correct extension
+                    if not custom_filename.lower().endswith(file_ext):
+                        custom_filename += file_ext
+                    temp_file_path = CACHE_DIR / custom_filename
+                else:
+                    temp_file_path = CACHE_DIR / f"{user_id}_temp{file_ext}"
                 
                 # Write file content
                 with open(temp_file_path, 'wb') as temp_file:
@@ -287,13 +297,15 @@ class TelegramBot:
                         file_url = next_level['file_id']
                         description = next_level.get('description', '')
                         file_type = next_level.get('type', None)
+                        custom_filename = next_level.get('filename', None)
                         
                         # Attempt to send the file
                         await FileHandler.send_file(
                             update, 
                             file_url, 
                             description, 
-                            file_type
+                            file_type, 
+                            custom_filename
                         )
                     
                     # Check for external link
@@ -350,12 +362,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-# next:
-# deploy
-# update menu and files.

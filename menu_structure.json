@@ -4,33 +4,41 @@
         "أحكام النون الساكنة والتنوين": {     
             "file_id": "https://drive.google.com/file/d/1GoAWUPcbrV-nWf514HRVcIPa0KD_ri9t/view?usp=sharing",
             "description": "شرح درس النون الساكنة والتنوين",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح أحكام النون الساكنة والتنوين"
         },
         "أحكام الميم الساكنة": {
             "file_id": "https://drive.google.com/file/d/1PX5PZBCwJEVLQR0YNfh48D0byPd6SvN3/view?usp=sharing",
             "description": "شرح درس الميم الساكنة",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح أحكام الميم الساكنة"
         }
       },
       "التفخيم والترقيق": {
             "file_id": "https://drive.google.com/file/d/1Hv4qMzCoz9nJpvCbHI_QIxBCgVWRn5au/view?usp=sharing",
             "description": "شرح درس التفخيم والترقيق",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح أحكام التفخيم والترقيق"
+
       },
       "المدود": {
             "file_id": "",
             "description": "شرح درس المدود",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح أحكام المدود"
       },
       "المخارج والصفات": {
             "file_id": "",
             "description": "شرح درس المخارج والصفات",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح مخارج وصفات الحروف"
       },
       "أحكام الاستعاذة والبسملة": {
             "file_id": "https://drive.google.com/file/d/12srFrBeyWjj3pK9ceqIWpdhqFxWzO9TE/view?usp=sharing",
             "description": "شرح درس الاستعاذة والبسملة",
-            "type": "document"
+            "type": "document",
+            "filename": "شرح أحكام الاستعاذة والبسملة"
+
       }
     }
 }

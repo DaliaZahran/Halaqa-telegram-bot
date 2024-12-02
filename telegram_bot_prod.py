@@ -2,6 +2,7 @@ import os
 # from constants import TOKEN, SUPABASE_URL, SUPABASE_KEY
 from typing import List, Union, Dict, Optional, Any
 import requests
+import re
 
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, CallbackQueryHandler
@@ -83,29 +84,65 @@ class BotManager:
 
 class FileHandler:
     @staticmethod
+    async def parse_google_drive_link(file_url: str) -> Optional[str]:
+        """
+        Parse and convert Google Drive public link to a direct download link.
+        
+        :param file_url: Google Drive file URL
+        :return: Direct download link or None
+        """
+        # Patterns to match different Google Drive link formats
+        drive_patterns = [
+            r'https://drive\.google\.com/file/d/([^/]+)/view\?usp=sharing',
+            r'https://drive\.google\.com/open\?id=([^&]+)',
+            r'https://drive\.google\.com/uc\?id=([^&]+)',
+        ]
+        
+        for pattern in drive_patterns:
+            match = re.search(pattern, file_url)
+            if match:
+                file_id = match.group(1)
+                # Construct direct download link
+                return f'https://drive.google.com/uc?export=download&id={file_id}'
+        
+        return None
+
+    @staticmethod
     async def download_file(file_url: str, timeout: int = 180) -> Optional[bytes]:
         """
         Download a file from a given URL with a configurable timeout.
+        Supports Supabase and Google Drive public links.
         
         :param file_url: URL of the file to download
         :param timeout: Timeout in seconds (default 180)
         :return: File content as bytes or None
         """
         try:
+            # Check if it's a Google Drive link and convert to direct download link
+            if 'drive.google.com' in file_url:
+                direct_link = await FileHandler.parse_google_drive_link(file_url)
+                if not direct_link:
+                    logger.error(f"Invalid Google Drive link: {file_url}")
+                    return None
+                file_url = direct_link
+
             # Remove token and query parameters to get clean filename
             clean_url = file_url.split('?')[0]
             
-            # Add authorization header for Supabase
-            headers = {
-                'apikey': SUPABASE_KEY,
-                'Authorization': f'Bearer {SUPABASE_KEY}'
-            }
+            # Determine headers based on URL type
+            headers = {}
+            if 'supabase' in file_url or SUPABASE_KEY in file_url:
+                headers = {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': f'Bearer {SUPABASE_KEY}'
+                }
             
             # Download the file
             response = requests.get(
                 file_url, 
                 headers=headers, 
-                timeout=timeout
+                timeout=timeout,
+                stream=True  # Add streaming to handle larger files
             )
             response.raise_for_status()
             
@@ -194,7 +231,7 @@ class FileHandler:
             logger.error(f"Error sending file: {e}")
             await update.message.reply_text("حدث خطأ أثناء إرسال الملف.")
             return False
-    
+
 class TelegramBot:
     @staticmethod
     async def start(update: Update, context: CallbackContext) -> int:

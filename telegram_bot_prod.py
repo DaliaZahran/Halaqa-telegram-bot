@@ -3,6 +3,8 @@ import os
 from typing import List, Union, Dict, Optional, Any
 import requests
 import re
+import tempfile
+# import shutil
 
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, CallbackQueryHandler
@@ -83,6 +85,30 @@ class BotManager:
         return current
 
 class FileHandler:
+    # Configure a temporary directory for file caching
+    TEMP_DIR = Path(tempfile.mkdtemp(prefix='telegram_bot_'))
+    
+    @staticmethod
+    def cleanup_temp_files(max_age_hours: int = 24):
+        """
+        Clean up temporary files older than the specified hours.
+        
+        :param max_age_hours: Maximum age of temporary files in hours
+        """
+        import time
+        
+        try:
+            current_time = time.time()
+            for item in FileHandler.TEMP_DIR.glob('*'):
+                # Check if the file is older than max_age_hours
+                if item.is_file() and (current_time - item.stat().st_mtime) > (max_age_hours * 3600):
+                    try:
+                        item.unlink()
+                    except Exception as e:
+                        logging.error(f"Error deleting temporary file {item}: {e}")
+        except Exception as e:
+            logging.error(f"Error during temp file cleanup: {e}")
+
     @staticmethod
     async def parse_google_drive_link(file_url: str) -> Optional[str]:
         """
@@ -108,13 +134,18 @@ class FileHandler:
         return None
 
     @staticmethod
-    async def download_file(file_url: str, timeout: int = 180) -> Optional[bytes]:
+    async def download_file(
+        file_url: str, 
+        timeout: int = 180, 
+        supabase_key: Optional[str] = None
+    ) -> Optional[bytes]:
         """
         Download a file from a given URL with a configurable timeout.
         Supports Supabase and Google Drive public links.
         
         :param file_url: URL of the file to download
         :param timeout: Timeout in seconds (default 180)
+        :param supabase_key: Optional Supabase API key
         :return: File content as bytes or None
         """
         try:
@@ -122,7 +153,7 @@ class FileHandler:
             if 'drive.google.com' in file_url:
                 direct_link = await FileHandler.parse_google_drive_link(file_url)
                 if not direct_link:
-                    logger.error(f"Invalid Google Drive link: {file_url}")
+                    logging.error(f"Invalid Google Drive link: {file_url}")
                     return None
                 file_url = direct_link
 
@@ -131,10 +162,10 @@ class FileHandler:
             
             # Determine headers based on URL type
             headers = {}
-            if 'supabase' in file_url or SUPABASE_KEY in file_url:
+            if supabase_key and ('supabase' in file_url or supabase_key in file_url):
                 headers = {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': f'Bearer {SUPABASE_KEY}'
+                    'apikey': supabase_key,
+                    'Authorization': f'Bearer {supabase_key}'
                 }
             
             # Download the file
@@ -147,23 +178,25 @@ class FileHandler:
             response.raise_for_status()
             
             # Log the file size for debugging
-            logger.info(f"Downloaded file size: {len(response.content)} bytes")
+            content = response.content
+            logging.info(f"Downloaded file size: {len(content)} bytes")
             
-            return response.content
+            return content
         except requests.exceptions.Timeout:
-            logger.error(f"Download timed out for URL: {file_url}")
+            logging.error(f"Download timed out for URL: {file_url}")
             return None
         except requests.RequestException as e:
-            logger.error(f"Error downloading file from {file_url}: {e}")
+            logging.error(f"Error downloading file from {file_url}: {e}")
             return None
 
     @staticmethod
     async def send_file(
-        update: Update, 
+        update, 
         file_url: str, 
         description: str = '', 
         file_type: Optional[str] = None,
-        custom_filename: Optional[str] = None
+        custom_filename: Optional[str] = None,
+        supabase_key: Optional[str] = None
     ) -> bool:
         """
         Send a file from a given URL
@@ -173,6 +206,7 @@ class FileHandler:
         :param description: Optional description for the file
         :param file_type: Optional file type (audio, document, etc.)
         :param custom_filename: Optional custom filename to use
+        :param supabase_key: Optional Supabase API key
         :return: True if file sent successfully, False otherwise
         """
         try:
@@ -180,7 +214,10 @@ class FileHandler:
             downloading_message = await update.message.reply_text("جاري تحميل الملف...")
             
             # Download the file
-            file_content = await FileHandler.download_file(file_url)
+            file_content = await FileHandler.download_file(
+                file_url, 
+                supabase_key=supabase_key
+            )
             
             if file_content:
                 # Remove token and query parameters to get clean filename
@@ -205,9 +242,9 @@ class FileHandler:
                     # Ensure the filename has the correct extension
                     if not custom_filename.lower().endswith(file_ext):
                         custom_filename += file_ext
-                    temp_file_path = CACHE_DIR / custom_filename
+                    temp_file_path = FileHandler.TEMP_DIR / custom_filename
                 else:
-                    temp_file_path = CACHE_DIR / f"{user_id}_temp{file_ext}"
+                    temp_file_path = FileHandler.TEMP_DIR / f"{user_id}_temp{file_ext}"
                 
                 # Write file content
                 with open(temp_file_path, 'wb') as temp_file:
@@ -218,17 +255,17 @@ class FileHandler:
                     if file_type == 'audio':
                         await update.message.reply_audio(
                             audio=file,
-                            caption=description,
+                            # caption=description,
                             parse_mode='HTML'
                         )
                     else:
                         await update.message.reply_document(
                             document=file,
-                            caption=description,
+                            # caption=description,
                             parse_mode='HTML'
                         )
                 
-                # Delete temporary message and file
+                # Delete temporary message and delete file afterwards
                 await downloading_message.delete()
                 temp_file_path.unlink()
                 
@@ -238,7 +275,7 @@ class FileHandler:
                 await downloading_message.edit_text("تعذر تحميل الملف. يرجى المحاولة مرة أخرى.")
                 return False
         except Exception as e:
-            logger.error(f"Error sending file: {e}")
+            logging.error(f"Error sending file: {e}")
             await update.message.reply_text("حدث خطأ أثناء إرسال الملف.")
             return False
 
@@ -350,6 +387,9 @@ class TelegramBot:
 
 def main() -> None:
     """Start the bot."""
+    # Periodic cleanup of temporary files
+    FileHandler.cleanup_temp_files()
+
     # Create the Application and pass it your bot's token
     application = Application.builder().token(TOKEN).build()
 

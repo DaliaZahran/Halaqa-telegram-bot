@@ -1,45 +1,163 @@
 {
-    "التجويد": {
-      "السواكن": {
-        "أحكام النون الساكنة والتنوين": {     
-            "file_id": "https://drive.google.com/file/d/1GoAWUPcbrV-nWf514HRVcIPa0KD_ri9t/view?usp=sharing",
-            "description": "شرح درس النون الساكنة والتنوين",
-            "type": "document",
-            "filename": "شرح أحكام النون الساكنة والتنوين"
+  "التجويد": {
+    "السواكن": {
+      "أحكام النون الساكنة والتنوين": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/13FTldrOAi367emDHv2heq39ZWSDDNnQB/view?usp=drive_link",
+          "description": "شرح درس النون الساكنة والتنوين",
+          "type": "document",
+          "filename": "شرح أحكام النون الساكنة والتنوين"
         },
-        "أحكام الميم الساكنة": {
-            "file_id": "https://drive.google.com/file/d/1PX5PZBCwJEVLQR0YNfh48D0byPd6SvN3/view?usp=sharing",
-            "description": "شرح درس الميم الساكنة",
-            "type": "document",
-            "filename": "شرح أحكام الميم الساكنة"
+        "تدريبات": {
+          "اختاري حكم الاظهار الحلقي": {
+            "link": "https://wordwall.net/resource/79926789/%d8%a7%d8%ae%d8%aa%d8%a7%d8%b1%d9%8a-%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d8%a7%d8%b8%d9%87%d8%a7%d8%b1-%d8%a7%d9%84%d8%ad%d9%84%d9%82%d9%8a",
+            "description": "اختاري حكم الاظهار الحلقي",
+            "type": "link"
+          },
+          "صح أم خطأ": {
+            "link": "https://wordwall.net/resource/79927358/%d8%b5%d8%ad-%d8%a3%d9%85-%d8%ae%d8%b7%d8%a3",
+            "description": "صح أم خطأ",
+            "type": "link"
+          },
+          "ورشة عمل 1": {
+            "link": "https://wordwall.net/resource/63848077/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-1",
+            "description": "ورشة عمل 1",
+            "type": "link"
+          },
+          "ورشة عمل 2": {
+            "link": "https://wordwall.net/resource/63849983/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-2",
+            "description": "ورشة عمل 2",
+            "type": "link"
+          },
+          "التدريب 2": {
+            "link": "https://wordwall.net/resource/62598176/%d8%a7%d9%84%d8%aa%d8%af%d8%b1%d9%8a%d8%a82",
+            "description": "التدريب 2",
+            "type": "link"
+          },
+          "تدريبات على أحكام النون الساكنة والتنوين": {
+            "link": "https://wordwall.net/resource/60897385/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa-%d8%b9%d9%84%d9%89-%d8%a3%d8%ad%d9%83%d8%a7%d9%85-%d8%a7%d9%84%d9%86%d9%88%d9%86-%d8%a7%d9%84%d8%b3%d8%a7%d9%83%d9%86%d8%a9-%d9%88%d8%a7%d9%84%d8%aa%d9%86%d9%88%d9%8a%d9%86",
+            "description": "تدريبات على أحكام النون الساكنة والتنوين",
+            "type": "link"
+          },
+          "اختاري الاجابة الصحيحة": {
+            "link": "https://wordwall.net/resource/62594754/%d8%a7%d8%ae%d8%aa%d8%a7%d8%b1%d9%8a-%d8%a7%d9%84%d8%a7%d8%ac%d8%a7%d8%a8%d8%a9-%d8%a7%d9%84%d8%b5%d8%ad%d9%8a%d8%ad%d8%a9",
+            "description": "اختاري الاجابة الصحيحة",
+            "type": "link"
+          }
         }
       },
-      "التفخيم والترقيق": {
-            "file_id": "https://drive.google.com/file/d/1Hv4qMzCoz9nJpvCbHI_QIxBCgVWRn5au/view?usp=sharing",
-            "description": "شرح درس التفخيم والترقيق",
-            "type": "document",
-            "filename": "شرح أحكام التفخيم والترقيق"
+      "أحكام الميم الساكنة": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/1IHJ1X8xOR2cUGQJnyBjITN-yr_jXpw15/view?usp=drive_link",
+          "description": "شرح درس الميم الساكنة",
+          "type": "document",
+          "filename": "شرح أحكام الميم الساكنة"
+        },
+        "تدريبات": {
+          "ورشة عمل الميم الساكنة": {
+            "link": "https://wordwall.net/resource/65920894/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-%d8%a7%d9%84%d9%85%d9%8a%d9%85-%d8%a7%d9%84%d8%b3%d8%a7%d9%83%d9%86%d8%a9",
+            "description": "ورشة عمل الميم الساكنة",
+            "type": "link"
+          },
+          "اختاري الكلمات المناسبة مع الحكم المناسب": {
+            "link": "https://wordwall.net/resource/81365316/%d8%a7%d8%ae%d8%aa%d8%a7%d8%b1%d9%8a-%d8%a7%d9%84%d9%83%d9%84%d9%85%d8%a7%d8%aa-%d8%a7%d9%84%d9%85%d9%86%d8%a7%d8%b3%d8%a8%d8%a9-%d9%85%d8%b9-%d8%a7%d9%84%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d9%85%d9%86%d8%a7%d8%b3%d8%a8",
+            "description": "اختاري الكلمات المناسبة مع الحكم المناسب",
+            "type": "link"
+          }
+        }
+      },
+      "تدريبات عامة": {
+        "تدريب على أحكام النون الساكنة والتنوين والميم الساكنة": {
+          "link": "https://forms.gle/59YyVmRJosSCPTf3A",
+          "description": "تدريب على أحكام النون الساكنة والتنوين والميم الساكنة",
+          "type": "link"
+        },
+        "تدريبات 1": {
+          "link": "https://wordwall.net/resource/64099884/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa-1",
+          "description": "تدريبات 1",
+          "type": "link"
+        },
+        "تدريبات 2": {
+          "link": "https://wordwall.net/resource/64101709/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8-2",
+          "description": "تدريبات 2",
+          "type": "link"
+        }
+      }
+    },
+    "التفخيم والترقيق": {
+      "الشرح": {
+        "file_id": "https://drive.google.com/file/d/1zo7dvPHBJi6mDsPEO957XCeD-D4QIgZw/view?usp=drive_link",
+        "description": "شرح درس التفخيم والترقيق",
+        "type": "document",
+        "filename": "شرح أحكام التفخيم والترقيق"
+      },
+      "تدريبات": {
+        "تدريبات على أحوال الراءات": {
+          "link": "https://forms.gle/8Mwh8FVAyUqSC46v8",
+          "description": "تدريبات على أحوال الراءات",
+          "type": "link"
+        },
+        "حروف التفخيم": {
+          "link": "https://wordwall.net/resource/66675766/%d8%ad%d8%b1%d9%88%d9%81-%d8%a7%d9%84%d8%aa%d9%81%d8%ae%d9%8a%d9%85",
+          "description": "حروف التفخيم",
+          "type": "link"
+        },
+        "مراتب التفخيم": {
+          "link": "https://wordwall.net/resource/66676518/%d9%85%d8%b1%d8%a7%d8%aa%d8%a8-%d8%a7%d9%84%d8%aa%d9%81%d8%ae%d9%8a%d9%85",
+          "description": "مراتب التفخيم",
+          "type": "link"
+        },
+       "تفخيم وترقيق - لام لفظ الجلالة": {
+          "link": "https://wordwall.net/resource/66677274/%d8%aa%d9%81%d8%ae%d9%8a%d9%85-%d9%88%d8%aa%d8%b1%d9%82%d9%8a%d9%82-%d9%84%d8%a7%d9%85-%d9%84%d9%81%d8%b8-%d8%a7%d9%84%d8%ac%d9%84%d8%a7%d9%84%d8%a9",
+          "description":"تفخيم وترقيق - لام لفظ الجلالة",
+          "type": "link"
+        }
+      }
+    },
+  
+    "المخارج والصفات": {
+      "الصفات": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/1S67G1BRQFoKgrm7B0JYdDxnSzcqWdWi4/view?usp=drive_link",
+          "description": "شرح درس الصفات",
+          "type": "document",
+          "filename": "شرح الصفات"
+        },
+        "تدريبات":{
+          "file_id": "https://wordwall.net/resource/61830526/%d8%af%d9%8a%d9%86/1%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d8%a7%d9%84%d8%b5%d9%81%d8%a7%d8%aa",
+          "description": "تدريب درس الصفات",
+          "type": "link",
+        }
+      },
+      "المخارج": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/1Raorrv_AxzNDe7uGjccqf5EkOAgRe9GQ/view?usp=drive_link",
+          "description": "شرح المخارج",
+          "type": "document",
+          "filename": "شرح المخارج"
+        },
+        "تدريبات":{
+          "تدريب المخارج 1":{
 
-      },
-      "المدود": {
-            "file_id": "",
-            "description": "شرح درس المدود",
-            "type": "document",
-            "filename": "شرح أحكام المدود"
-      },
-      "المخارج والصفات": {
-            "file_id": "",
-            "description": "شرح درس المخارج والصفات",
-            "type": "document",
-            "filename": "شرح مخارج وصفات الحروف"
-      },
-      "أحكام الاستعاذة والبسملة": {
-            "file_id": "https://drive.google.com/file/d/12srFrBeyWjj3pK9ceqIWpdhqFxWzO9TE/view?usp=sharing",
-            "description": "شرح درس الاستعاذة والبسملة",
-            "type": "document",
-            "filename": "شرح أحكام الاستعاذة والبسملة"
-
+            "file_id": "https://wordwall.net/resource/61826633/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac1",
+            "description": "تدريب المخارج 1",
+            "type": "link"
+          },
+          "تدريب المخارج 2":{
+            "file_id": "https://wordwall.net/resource/61826781/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac2",
+            "description": "تدريب المخارج 2",
+            "type": "link"
+          }
+        }
+      }
+    },
+    "أحكام الاستعاذة والبسملة": {
+      "الشرح":{
+        "file_id": "https://drive.google.com/file/d/12srFrBeyWjj3pK9ceqIWpdhqFxWzO9TE/view?usp=sharing",
+        "description": "أحكام الاستعاذة والبسملة 1",
+        "type": "document",
+        "filename": "شرح أحكام الاستعاذة والبسملة"
       }
     }
+  }
 }
-

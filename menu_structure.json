@@ -107,14 +107,13 @@
           "description": "مراتب التفخيم",
           "type": "link"
         },
-       "تفخيم وترقيق - لام لفظ الجلالة": {
+        "تفخيم وترقيق - لام لفظ الجلالة": {
           "link": "https://wordwall.net/resource/66677274/%d8%aa%d9%81%d8%ae%d9%8a%d9%85-%d9%88%d8%aa%d8%b1%d9%82%d9%8a%d9%82-%d9%84%d8%a7%d9%85-%d9%84%d9%81%d8%b8-%d8%a7%d9%84%d8%ac%d9%84%d8%a7%d9%84%d8%a9",
-          "description":"تفخيم وترقيق - لام لفظ الجلالة",
+          "description": "تفخيم وترقيق - لام لفظ الجلالة",
           "type": "link"
         }
       }
     },
-  
     "المخارج والصفات": {
       "الصفات": {
         "الشرح": {
@@ -123,10 +122,10 @@
           "type": "document",
           "filename": "شرح الصفات"
         },
-        "تدريبات":{
+        "تدريبات": {
           "file_id": "https://wordwall.net/resource/61830526/%d8%af%d9%8a%d9%86/1%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d8%a7%d9%84%d8%b5%d9%81%d8%a7%d8%aa",
           "description": "تدريب درس الصفات",
-          "type": "link",
+          "type": "link"
         }
       },
       "المخارج": {
@@ -136,14 +135,13 @@
           "type": "document",
           "filename": "شرح المخارج"
         },
-        "تدريبات":{
-          "تدريب المخارج 1":{
-
+        "تدريبات": {
+          "تدريب المخارج 1": {
             "file_id": "https://wordwall.net/resource/61826633/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac1",
             "description": "تدريب المخارج 1",
             "type": "link"
           },
-          "تدريب المخارج 2":{
+          "تدريب المخارج 2": {
             "file_id": "https://wordwall.net/resource/61826781/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac2",
             "description": "تدريب المخارج 2",
             "type": "link"
@@ -152,7 +150,7 @@
       }
     },
     "أحكام الاستعاذة والبسملة": {
-      "الشرح":{
+      "الشرح": {
         "file_id": "https://drive.google.com/file/d/12srFrBeyWjj3pK9ceqIWpdhqFxWzO9TE/view?usp=sharing",
         "description": "أحكام الاستعاذة والبسملة 1",
         "type": "document",

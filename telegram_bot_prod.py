@@ -328,7 +328,6 @@ class TelegramBot:
 
         return NAVIGATING_MENU
 
-
     @staticmethod
     async def handle_menu_navigation(update: Update, context: CallbackContext) -> int:
         """Handle menu navigation and file sending."""
@@ -344,6 +343,23 @@ class TelegramBot:
         # Ensure user states exist
         if user_id not in user_states:
             user_states[user_id] = []
+
+        # If main menu button is pressed, reset to root menu
+        if text == "🏠 القائمة الرئيسية":
+            user_states[user_id] = []
+            menu_structure = BotManager.load_menu_structure()
+
+            welcome_message = (
+                "🌟 تم العودة إلى القائمة الرئيسية\n"
+                "يمكنك اختيار القسم المطلوب من القائمة أدناه"
+            )
+
+            await update.message.reply_text(
+                welcome_message,
+                reply_markup=BotManager.get_keyboard_for_menu(menu_structure),
+                parse_mode='HTML'
+            )
+            return NAVIGATING_MENU
 
         current_path = user_states[user_id]
         menu_structure = BotManager.load_menu_structure()
@@ -418,19 +434,17 @@ class TelegramBot:
 
         return NAVIGATING_MENU
 
-
     @staticmethod
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
-
         """Handle the return to main menu command."""
         user_id = update.effective_user.id
-        
+
         # Delete the main menu command message
         try:
             await update.message.delete()
         except Exception as e:
             logging.error(f"Could not delete main menu command message: {e}")
-        
+
         # Reset user state to root menu
         user_states[user_id] = []
 
@@ -460,7 +474,8 @@ def main() -> None:
 
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
-    application.add_handler(CommandHandler('main_menu', TelegramBot.return_to_main_menu))
+    application.add_handler(CommandHandler(
+        'main_menu', TelegramBot.return_to_main_menu))
     application.add_handler(MessageHandler(
         filters.TEXT & ~filters.COMMAND, TelegramBot.handle_menu_navigation))
 

@@ -71,7 +71,12 @@ class BotManager:
 
         # Add back button if not in root menu
         if keyboard:
-            keyboard.append([KeyboardButton("🔙 رجوع")])
+            keyboard.append([
+                KeyboardButton("🔙 رجوع"),
+                KeyboardButton("🏠 القائمة الرئيسية")  # New main menu button
+            ])
+        else:
+            keyboard.append([KeyboardButton("🏠 القائمة الرئيسية")])
 
         return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
@@ -299,6 +304,12 @@ class TelegramBot:
         """Handle the /start command."""
         user_id = update.effective_user.id
 
+        # Delete the start command message
+        try:
+            await update.message.delete()
+        except Exception as e:
+            logging.error(f"Could not delete start command message: {e}")
+
         # Reset user state to root menu
         user_states[user_id] = []
 
@@ -317,11 +328,18 @@ class TelegramBot:
 
         return NAVIGATING_MENU
 
+
     @staticmethod
     async def handle_menu_navigation(update: Update, context: CallbackContext) -> int:
         """Handle menu navigation and file sending."""
         user_id = update.effective_user.id
         text = update.message.text
+
+        # Delete the user's original message
+        try:
+            await update.message.delete()
+        except Exception as e:
+            logging.error(f"Could not delete user's message: {e}")
 
         # Ensure user states exist
         if user_id not in user_states:
@@ -401,6 +419,37 @@ class TelegramBot:
         return NAVIGATING_MENU
 
 
+    @staticmethod
+    async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
+
+        """Handle the return to main menu command."""
+        user_id = update.effective_user.id
+        
+        # Delete the main menu command message
+        try:
+            await update.message.delete()
+        except Exception as e:
+            logging.error(f"Could not delete main menu command message: {e}")
+        
+        # Reset user state to root menu
+        user_states[user_id] = []
+
+        menu_structure = BotManager.load_menu_structure()
+
+        welcome_message = (
+            "🌟 تم العودة إلى القائمة الرئيسية\n"
+            "يمكنك اختيار القسم المطلوب من القائمة أدناه"
+        )
+
+        await update.message.reply_text(
+            welcome_message,
+            reply_markup=BotManager.get_keyboard_for_menu(menu_structure),
+            parse_mode='HTML'
+        )
+
+        return NAVIGATING_MENU
+
+
 def main() -> None:
     """Start the bot."""
     # Periodic cleanup of temporary files
@@ -411,6 +460,7 @@ def main() -> None:
 
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
+    application.add_handler(CommandHandler('main_menu', TelegramBot.return_to_main_menu))
     application.add_handler(MessageHandler(
         filters.TEXT & ~filters.COMMAND, TelegramBot.handle_menu_navigation))
 

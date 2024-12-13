@@ -27,7 +27,7 @@ if TOKEN:
     print("Token loaded successfully")
 else:
     print("Failed to load token. Check Railway environment settings.")
-    
+
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 
@@ -48,6 +48,7 @@ MENU_FILE = "menu_structure.json"
 # Define user state storage
 user_states: Dict[int, List[str]] = {}
 
+
 class BotManager:
     @staticmethod
     def load_menu_structure() -> dict:
@@ -63,7 +64,7 @@ class BotManager:
     def get_keyboard_for_menu(menu_dict: dict) -> ReplyKeyboardMarkup:
         """Create a keyboard for the current menu level."""
         keyboard = []
-        
+
         # Add menu items as buttons
         for key in menu_dict.keys():
             keyboard.append([KeyboardButton(key)])
@@ -84,19 +85,20 @@ class BotManager:
             current = current[item]
         return current
 
+
 class FileHandler:
     # Configure a temporary directory for file caching
     TEMP_DIR = Path(tempfile.mkdtemp(prefix='telegram_bot_'))
-    
+
     @staticmethod
     def cleanup_temp_files(max_age_hours: int = 24):
         """
         Clean up temporary files older than the specified hours.
-        
+
         :param max_age_hours: Maximum age of temporary files in hours
         """
         import time
-        
+
         try:
             current_time = time.time()
             for item in FileHandler.TEMP_DIR.glob('*'):
@@ -105,7 +107,8 @@ class FileHandler:
                     try:
                         item.unlink()
                     except Exception as e:
-                        logging.error(f"Error deleting temporary file {item}: {e}")
+                        logging.error(
+                            f"Error deleting temporary file {item}: {e}")
         except Exception as e:
             logging.error(f"Error during temp file cleanup: {e}")
 
@@ -113,36 +116,38 @@ class FileHandler:
     async def parse_google_drive_link(file_url: str) -> Optional[str]:
         """
         Parse and convert Google Drive public link to a direct download link.
-        
+
         :param file_url: Google Drive file URL
         :return: Direct download link or None
         """
         # Patterns to match different Google Drive link formats
         drive_patterns = [
+            # New format
+            r'https://drive\.google\.com/file/d/([^/]+)/view\?usp=drive_link',
             r'https://drive\.google\.com/file/d/([^/]+)/view\?usp=sharing',
             r'https://drive\.google\.com/open\?id=([^&]+)',
             r'https://drive\.google\.com/uc\?id=([^&]+)',
         ]
-        
+
         for pattern in drive_patterns:
             match = re.search(pattern, file_url)
             if match:
                 file_id = match.group(1)
                 # Construct direct download link
                 return f'https://drive.google.com/uc?export=download&id={file_id}'
-        
+
         return None
 
     @staticmethod
     async def download_file(
-        file_url: str, 
-        timeout: int = 180, 
+        file_url: str,
+        timeout: int = 180,
         supabase_key: Optional[str] = None
     ) -> Optional[bytes]:
         """
         Download a file from a given URL with a configurable timeout.
         Supports Supabase and Google Drive public links.
-        
+
         :param file_url: URL of the file to download
         :param timeout: Timeout in seconds (default 180)
         :param supabase_key: Optional Supabase API key
@@ -159,7 +164,7 @@ class FileHandler:
 
             # Remove token and query parameters to get clean filename
             clean_url = file_url.split('?')[0]
-            
+
             # Determine headers based on URL type
             headers = {}
             if supabase_key and ('supabase' in file_url or supabase_key in file_url):
@@ -167,40 +172,47 @@ class FileHandler:
                     'apikey': supabase_key,
                     'Authorization': f'Bearer {supabase_key}'
                 }
-            
+
             # Download the file
             response = requests.get(
-                file_url, 
-                headers=headers, 
+                file_url,
+                headers=headers,
                 timeout=timeout,
                 stream=True  # Add streaming to handle larger files
             )
             response.raise_for_status()
-            
+
             # Log the file size for debugging
             content = response.content
             logging.info(f"Downloaded file size: {len(content)} bytes")
-            
+
             return content
+
+        except requests.exceptions.SSLError as ssl_err:
+            logging.error(f"SSL Certificate Verification Error: {ssl_err}")
+            return None
+        except requests.exceptions.ConnectionError as conn_err:
+            logging.error(f"Connection Error: {conn_err}")
+            return None
         except requests.exceptions.Timeout:
             logging.error(f"Download timed out for URL: {file_url}")
             return None
         except requests.RequestException as e:
-            logging.error(f"Error downloading file from {file_url}: {e}")
+            logging.error(f"Comprehensive download error from {file_url}: {e}")
             return None
 
     @staticmethod
     async def send_file(
-        update, 
-        file_url: str, 
-        description: str = '', 
+        update,
+        file_url: str,
+        description: str = '',
         file_type: Optional[str] = None,
         custom_filename: Optional[str] = None,
         supabase_key: Optional[str] = None
     ) -> bool:
         """
         Send a file from a given URL
-        
+
         :param update: Telegram update object
         :param file_url: URL of the file to send
         :param description: Optional description for the file
@@ -212,17 +224,17 @@ class FileHandler:
         try:
             # Send a "downloading" message
             downloading_message = await update.message.reply_text("جاري تحميل الملف...")
-            
+
             # Download the file
             file_content = await FileHandler.download_file(
-                file_url, 
+                file_url,
                 supabase_key=supabase_key
             )
-            
+
             if file_content:
                 # Remove token and query parameters to get clean filename
                 clean_url = file_url.split('?')[0]
-                
+
                 # Determine file extension
                 if not file_type:
                     # Try to guess file type from URL
@@ -232,10 +244,10 @@ class FileHandler:
                         file_type = 'document'
                     else:
                         file_type = 'document'
-                
+
                 # Determine file extension
                 file_ext = os.path.splitext(clean_url)[1] or '.pdf'
-                
+
                 # Use custom filename if provided, otherwise generate a temp filename
                 user_id = update.effective_user.id
                 if custom_filename:
@@ -244,12 +256,13 @@ class FileHandler:
                         custom_filename += file_ext
                     temp_file_path = FileHandler.TEMP_DIR / custom_filename
                 else:
-                    temp_file_path = FileHandler.TEMP_DIR / f"{user_id}_temp{file_ext}"
-                
+                    temp_file_path = FileHandler.TEMP_DIR / \
+                        f"{user_id}_temp{file_ext}"
+
                 # Write file content
                 with open(temp_file_path, 'wb') as temp_file:
                     temp_file.write(file_content)
-                
+
                 # Send the file based on type
                 with open(temp_file_path, 'rb') as file:
                     if file_type == 'audio':
@@ -264,11 +277,11 @@ class FileHandler:
                             # caption=description,
                             parse_mode='HTML'
                         )
-                
+
                 # Delete temporary message and delete file afterwards
                 await downloading_message.delete()
                 temp_file_path.unlink()
-                
+
                 return True
             else:
                 # Edit the downloading message to show an error
@@ -279,12 +292,13 @@ class FileHandler:
             await update.message.reply_text("حدث خطأ أثناء إرسال الملف.")
             return False
 
+
 class TelegramBot:
     @staticmethod
     async def start(update: Update, context: CallbackContext) -> int:
         """Handle the /start command."""
         user_id = update.effective_user.id
-        
+
         # Reset user state to root menu
         user_states[user_id] = []
 
@@ -322,11 +336,12 @@ class TelegramBot:
                 current_path.pop()
         else:
             # Get current menu level
-            current_menu = BotManager.get_menu_item(menu_structure, current_path)
+            current_menu = BotManager.get_menu_item(
+                menu_structure, current_path)
 
             if current_menu and text in current_menu:
                 next_level = current_menu[text]
-                
+
                 # If the item is a dictionary with 'file_id', it's a document to send
                 if isinstance(next_level, dict):
                     # Check for file
@@ -335,37 +350,37 @@ class TelegramBot:
                         description = next_level.get('description', '')
                         file_type = next_level.get('type', None)
                         custom_filename = next_level.get('filename', None)
-                        
+
                         # Attempt to send the file
                         await FileHandler.send_file(
-                            update, 
-                            file_url, 
-                            description, 
-                            file_type, 
+                            update,
+                            file_url,
+                            description,
+                            file_type,
                             custom_filename
                         )
-                    
+
                     # Check for external link
                     if 'link' in next_level:
                         link = next_level['link']
                         description = next_level.get('description', '')
-                        
+
                         # Create an inline keyboard with the link
                         keyboard = [
                             [InlineKeyboardButton(
-                                "📎 فتح الرابط", 
+                                "📎 فتح الرابط",
                                 url=link
                             )]
                         ]
                         reply_markup = InlineKeyboardMarkup(keyboard)
-                        
+
                         # Send message with link
                         await update.message.reply_text(
                             f"{description}\n\nرابط: {link}",
                             reply_markup=reply_markup,
                             parse_mode='HTML'
                         )
-                    
+
                     # If it's a submenu, navigate into it
                     if any(isinstance(val, dict) for val in next_level.values()):
                         current_path.append(text)
@@ -385,6 +400,7 @@ class TelegramBot:
 
         return NAVIGATING_MENU
 
+
 def main() -> None:
     """Start the bot."""
     # Periodic cleanup of temporary files
@@ -395,10 +411,12 @@ def main() -> None:
 
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, TelegramBot.handle_menu_navigation))
+    application.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND, TelegramBot.handle_menu_navigation))
 
     # Run the bot
     application.run_polling()
+
 
 if __name__ == '__main__':
     main()

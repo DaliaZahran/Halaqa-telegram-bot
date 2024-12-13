@@ -123,9 +123,11 @@
           "filename": "شرح الصفات"
         },
         "تدريبات": {
-          "file_id": "https://wordwall.net/resource/61830526/%d8%af%d9%8a%d9%86/1%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d8%a7%d9%84%d8%b5%d9%81%d8%a7%d8%aa",
-          "description": "تدريب درس الصفات",
-          "type": "link"
+          "تدريب 1" : {
+            "link": "https://wordwall.net/resource/61830526/%d8%af%d9%8a%d9%86/1%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d8%a7%d9%84%d8%b5%d9%81%d8%a7%d8%aa",
+            "description": "تدريب درس الصفات",
+            "type": "link"
+          }
         }
       },
       "المخارج": {
@@ -137,12 +139,12 @@
         },
         "تدريبات": {
           "تدريب المخارج 1": {
-            "file_id": "https://wordwall.net/resource/61826633/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac1",
+            "link": "https://wordwall.net/resource/61826633/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac1",
             "description": "تدريب المخارج 1",
             "type": "link"
           },
           "تدريب المخارج 2": {
-            "file_id": "https://wordwall.net/resource/61826781/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac2",
+            "link": "https://wordwall.net/resource/61826781/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa%d9%85%d8%ae%d8%a7%d8%b1%d8%ac2",
             "description": "تدريب المخارج 2",
             "type": "link"
           }

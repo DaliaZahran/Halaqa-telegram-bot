@@ -243,7 +243,7 @@ class FileHandler:
                 # Determine file extension
                 if not file_type:
                     # Try to guess file type from URL
-                    if clean_url.lower().endswith(('.mp3', '.m4a','.mp4', '.wav', '.ogg')):
+                    if clean_url.lower().endswith(('.mp3', '.m4a', '.mp4', '.wav', '.ogg')):
                         file_type = 'audio'
                     elif clean_url.lower().endswith(('.pdf', '.doc', '.docx', '.txt')):
                         file_type = 'document'
@@ -252,7 +252,7 @@ class FileHandler:
 
                 if file_type == 'audio':
                     file_ext = '.m4a'
-                else:                   
+                else:
                     file_ext = os.path.splitext(clean_url)[1] or '.pdf'
 
                 # Determine file extension
@@ -332,7 +332,7 @@ class TelegramBot:
         )
 
         return NAVIGATING_MENU
-   
+
     @staticmethod
     async def handle_menu_navigation(update: Update, context: CallbackContext) -> int:
         """Handle menu navigation and file sending."""
@@ -353,7 +353,7 @@ class TelegramBot:
         if text == "🏠 القائمة الرئيسية":
             user_states[user_id] = []
             menu_structure = BotManager.load_menu_structure()
-            
+
             welcome_message = (
                 "🌟 تم العودة إلى القائمة الرئيسية\n"
                 "يمكنك اختيار القسم المطلوب من القائمة أدناه"
@@ -419,7 +419,7 @@ class TelegramBot:
                             reply_markup=reply_markup,
                             parse_mode='HTML'
                         )
-                    
+
                     # Check for external list of links
                     if 'links' in next_level:
                         links = next_level['links']
@@ -451,19 +451,17 @@ class TelegramBot:
 
         return NAVIGATING_MENU
 
-
     @staticmethod
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
-
         """Handle the return to main menu command."""
         user_id = update.effective_user.id
-        
+
         # Delete the main menu command message
         try:
             await update.message.delete()
         except Exception as e:
             logging.error(f"Could not delete main menu command message: {e}")
-        
+
         # Reset user state to root menu
         user_states[user_id] = []
 
@@ -493,7 +491,8 @@ def main() -> None:
 
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
-    application.add_handler(CommandHandler('main_menu', TelegramBot.return_to_main_menu))
+    application.add_handler(CommandHandler(
+        'main_menu', TelegramBot.return_to_main_menu))
     application.add_handler(MessageHandler(
         filters.TEXT & ~filters.COMMAND, TelegramBot.handle_menu_navigation))
 

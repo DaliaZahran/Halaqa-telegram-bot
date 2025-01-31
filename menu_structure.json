@@ -293,7 +293,204 @@
             "type": "audio",
             "filename": "12 - الشيخ الحصري.m4a"
           }
+        },
+        "13": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1kIKbdMT9w-bOy9VltVFiGIuw3M56Iu1N/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 13",
+            "type": "document",
+            "filename": "سورة البقرة - ص 13"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1HZ122lG_m9sfxfettCqDREYV7v88jvzd/view?usp=drive_link",
+            "type": "audio",
+            "filename": "13 - الشيخ الحصري.m4a"
+          }
+        },
+        "14": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1HVvfuuIeh5IXu4TWcS84_2SPpfIIiIYs/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 14",
+            "type": "document",
+            "filename": "سورة البقرة - ص 14"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1Kxix1b9EgRPaUpyk7BT1wtakwE33VLwG/view?usp=drive_link",
+            "type": "audio",
+            "filename": "14 - الشيخ الحصري.m4a"
+          }
+        },
+        "15": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1I_9UR3fQlTT47pEtCWMIgf2BhF2VWOH-/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 15",
+            "type": "document",
+            "filename": "سورة البقرة - ص 15"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1HLXBRvRQgC282kDCw8QsHU6sf5PYV65K/view?usp=drive_link",
+            "type": "audio",
+            "filename": "15 - الشيخ الحصري.m4a"
+          }
+        },
+        "16": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1Msu7PwjR5U5LZhi59kRFOGe49fl__cVj/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 16",
+            "type": "document",
+            "filename": "سورة البقرة - ص 16"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1cAOB_btfsApq8XrOI9VXEpvIDaiJ0MKm/view?usp=drive_link",
+            "type": "audio",
+            "filename": "16 - الشيخ الحصري.m4a"
+          }
+        },
+        "17": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1e8utfoytUX2HkEONB8K6juZkWuNbICzg/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 17",
+            "type": "document",
+            "filename": "سورة البقرة - ص 17"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1jcBpc-osVjryhPE7-uLw0ukmNQMkHI3-/view?usp=drive_link",
+            "type": "audio",
+            "filename": "17 - الشيخ الحصري.m4a"
+          }
+        },
+        "18": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1qUGfgFJkVnjMwBK4bKiPfKbwsXpAaEF9/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 18",
+            "type": "document",
+            "filename": "سورة البقرة - ص 18"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/14pW5x1m1v8XUT7HtH7Pm4acXrftOhNDU/view?usp=drive_link",
+            "type": "audio",
+            "filename": "18 - الشيخ الحصري.m4a"
+          }
+        },
+        "19": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1017wAd1pvTY51mnYQcQB-KSTze3LMOIy/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 19",
+            "type": "document",
+            "filename": "سورة البقرة - ص 19"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1pSRJeDPlGyzCX2kpm1Z2nfejqPCP6xt_/view?usp=drive_link",
+            "type": "audio",
+            "filename": "19 - الشيخ الحصري.m4a"
+          }
+        },
+        "20": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1d2ywNiH2xzY941_4NKt3sHPQMvWSG58G/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 20",
+            "type": "document",
+            "filename": "سورة البقرة - ص 20"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1j7RUt75PvcTJEjtl479FKJQsBJdwFyI5/view?usp=drive_link",
+            "type": "audio",
+            "filename": "20 - الشيخ الحصري.m4a"
+          }
+        },
+        "21": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1mC3iqqag5NJ4XV194kJi5w6vBBE0wyM6/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 21",
+            "type": "document",
+            "filename": "سورة البقرة - ص 21"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1dLykoD7HtBHcu84lrOqp5r05GnDebvVT/view?usp=drive_link",
+            "type": "audio",
+            "filename": "21 - الشيخ الحصري.m4a"
+          }
         }
+      },
+      "الجزء الثاني": {
+        "22": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1agOJwYd3HLrp1AU8y4cv-2F_vR25i-1W/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 22",
+            "type": "document",
+            "filename": "سورة البقرة - ص 22"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/179dK_dMcPRaqI1tmZpkaU3oeroGkxEBU/view?usp=drive_link",
+            "type": "audio",
+            "filename": "22 - الشيخ الحصري.m4a"
+          }
+        },
+        "23": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1u2qkgX072G0Bs7I0o4s4vLxvXmvNGPZy/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 23",
+            "type": "document",
+            "filename": "سورة البقرة - ص 23"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1S6TEkVxUgrb1oS1WD7KrQT-BwHQqiPgv/view?usp=drive_link",
+            "type": "audio",
+            "filename": "23 - الشيخ الحصري.m4a"
+          }
+        },
+        "24": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1xYGbzchkzx0DxXCUAz27wNAx9cB_Masa/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 24",
+            "type": "document",
+            "filename": "سورة البقرة - ص 24"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1cEjzHEw8MPwQj3mHD-YmN0zY74PC3nV3/view?usp=drive_link",
+            "type": "audio",
+            "filename": "24 - الشيخ الحصري.m4a"
+          }
+        },
+        "25": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1Z-HyEU1pHQq32HmUHU5h1tol3623WArQ/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 25",
+            "type": "document",
+            "filename": "سورة البقرة - ص 25"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1Lfzr2AGtPVYOIVMmLM_7zAbTHCL36uEi/view?usp=drive_link",
+            "type": "audio",
+            "filename": "25 - الشيخ الحصري.m4a"
+          }
+        }
+      }
+    },
+    "العنكبوت": {
+      "المقدمة + المقطع الأول(1-13)": {
+        "file_id": "https://drive.google.com/file/d/1J8Cm1waw5pSxgLitGQR3GErKW7V4Cuqs/view?usp=drive_link",
+        "description": "المقدمة + مقطع أول - شرح",
+        "type": "document",
+        "filename": "المقدمة + مقطع أول - شرح"
+      },
+      "المقطع الثاني (14-40)": {
+        "file_id": "https://drive.google.com/file/d/1Lco3LqKwPFAKJtXe-2I70QjDpP3IUh_M/view?usp=drive_link",
+        "description": "المقطع الثاني (14-40)",
+        "type": "document",
+        "filename": "سورة العنكبوت - المقطع الثاني - باوربوينت"
+      },
+      "المقطع الثالث (41-55)": {
+        "file_id": "https://drive.google.com/file/d/1fPGerjgrajVI0RCyUhqH15veFsNyDtGg/view?usp=drive_link",
+        "description": "المقطع الثالث (41-55)",
+        "type": "document",
+        "filename": "سورة العنكبوت - المقطع الثالث - باوربوينت"
+      },
+      "المقطع الرابع (56-نهاية السورة)": {
+        "file_id": "https://drive.google.com/file/d/1rvJ2g9UmwStbQYcQvA9Zoq94azwd5Lei/view?usp=drive_link",
+        "description": "المقطع الرابع (56-نهاية السورة)",
+        "type": "document",
+        "filename": "العنكبوت_المقطع_الرابع"
       }
     }
   }

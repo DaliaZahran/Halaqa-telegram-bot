@@ -1,18 +1,30 @@
+# Fix import order - group standard library imports first
+import json
+import logging
 import os
-# from constants import TOKEN, SUPABASE_URL, SUPABASE_KEY
-from typing import List, Union, Dict, Optional, Any
-import requests
 import re
 import tempfile
-# import shutil
-
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, ContextTypes, CommandHandler, MessageHandler, filters, CallbackContext, CallbackQueryHandler
-
-import logging
-import json
 from pathlib import Path
+from typing import List, Union, Dict, Optional, Any
+
+# Third-party imports next
+import requests
 from dotenv import load_dotenv
+from telegram import (
+    Update, 
+    ReplyKeyboardMarkup, 
+    KeyboardButton, 
+    InlineKeyboardButton, 
+    InlineKeyboardMarkup
+)
+from telegram.ext import (
+    Application, 
+    ContextTypes, 
+    CommandHandler, 
+    MessageHandler, 
+    filters, 
+    CallbackContext
+)
 
 
 # Load environment variables from .env file
@@ -49,7 +61,9 @@ MENU_FILE = "menu_structure.json"
 user_states: Dict[int, List[str]] = {}
 
 
+"""Telegram bot for managing and distributing educational content.""" 
 class BotManager:
+    """Manages the bot's menu structure and keyboard layouts."""
     @staticmethod
     def load_menu_structure() -> dict:
         """Load the menu structure from JSON file."""
@@ -57,7 +71,7 @@ class BotManager:
             with open(MENU_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except FileNotFoundError:
-            logger.error(f"Menu file {MENU_FILE} not found")
+            logger.error("Menu file %s not found", MENU_FILE)
             return {}
 
     @staticmethod
@@ -92,6 +106,7 @@ class BotManager:
 
 
 class FileHandler:
+    """Handles file operations including downloads and temporary storage."""
     # Configure a temporary directory for file caching
     TEMP_DIR = Path(tempfile.mkdtemp(prefix='telegram_bot_'))
 
@@ -280,6 +295,7 @@ class FileHandler:
 
 
 class TelegramBot:
+    """Main bot class handling commands and menu navigation."""
     @staticmethod
     async def start(update: Update, context: CallbackContext) -> int:
         """Handle the /start command."""

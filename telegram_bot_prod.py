@@ -6,6 +6,7 @@ import re
 import tempfile
 from pathlib import Path
 from typing import List, Union, Dict, Optional, Any
+import asyncio
 
 # Third-party imports next
 import requests
@@ -234,7 +235,7 @@ class FileHandler:
         try:
             # Notify user that the file is being downloaded
             downloading_message = await update.message.reply_text("جاري تحميل الملف...")
-            print('file_url ==> ', file_url)
+
             # Download the file (call your download logic here)
             file_content = await FileHandler.download_file(
                 file_url,
@@ -274,6 +275,7 @@ class FileHandler:
                     # Send the file
                     await update.message.reply_document(
                         document=file,
+                        filename=custom_filename,
                         caption=description,
                         read_timeout=300  # Increased timeout for sending large files
                     )
@@ -322,97 +324,136 @@ class TelegramBot:
     @staticmethod
     async def handle_menu_navigation(update: Update, context: CallbackContext) -> int:
         """Handle menu navigation and file sending."""
-        user_id = update.effective_user.id
-        text = update.message.text
+        try:
+            user_id = update.effective_user.id
+            text = update.message.text
 
-        # Ensure user states exist
-        if user_id not in user_states:
-            user_states[user_id] = []
+            # Ensure user states exist
+            if user_id not in user_states:
+                user_states[user_id] = []
 
-        # If main menu button is pressed, reset to root menu
-        if text == "🏠 القائمة الرئيسية":
-            user_states[user_id] = []
+            # If main menu button is pressed, reset to root menu
+            if text == "🏠 القائمة الرئيسية":
+                user_states[user_id] = []
+                menu_structure = BotManager.load_menu_structure()
+
+                await update.message.reply_text(
+                    "🌟 تم العودة إلى القائمة الرئيسية\nيمكنك اختيار القسم المطلوب من القائمة أدناه",
+                    reply_markup=BotManager.get_keyboard_for_menu(menu_structure),
+                    parse_mode='HTML'
+                )
+                return NAVIGATING_MENU
+
+            current_path = user_states[user_id]
             menu_structure = BotManager.load_menu_structure()
 
-            await update.message.reply_text(
-                "🌟 تم العودة إلى القائمة الرئيسية\nيمكنك اختيار القسم المطلوب من القائمة أدناه",
-                reply_markup=BotManager.get_keyboard_for_menu(menu_structure),
-                parse_mode='HTML'
-            )
+            if text == "🔙 رجوع":
+                if current_path:
+                    current_path.pop()
+            else:
+                current_menu = BotManager.get_menu_item(menu_structure, current_path)
+
+                if current_menu and text in current_menu:
+                    next_level = current_menu[text]
+                    file_sent = False
+
+                    # Handle multiple files
+                    if 'file_ids' in next_level:
+                        files = next_level.get('file_ids', [])
+                        for file_metadata in files:
+                            if not isinstance(file_metadata, dict):
+                                logging.error(f"Invalid file metadata format: {file_metadata}")
+                                continue
+                                
+                            file_url = file_metadata.get('file_id')
+                            if not file_url or not isinstance(file_url, str):
+                                logging.error("Invalid or missing file_id in metadata")
+                                continue
+
+                            file_type = file_metadata.get('type')
+                            custom_filename = file_metadata.get('filename')
+                            success = await FileHandler.send_file(
+                                update=update,
+                                context=context,
+                                file_url=file_url,
+                                description='',
+                                file_type=file_type,
+                                custom_filename=custom_filename
+                            )
+                            if success:
+                                file_sent = True
+
+                    # Handle single file
+                    elif 'file_id' in next_level:
+                        file_url = next_level.get('file_id')
+                        if file_url and isinstance(file_url, str):
+                            file_type = next_level.get('type')
+                            custom_filename = next_level.get('filename')
+                            success = await FileHandler.send_file(
+                                update=update,
+                                context=context,
+                                file_url=file_url,
+                                description='',
+                                file_type=file_type,
+                                custom_filename=custom_filename
+                            )
+                            if success:
+                                file_sent = True
+                        else:
+                            logging.error(f"Invalid file_id in next_level: {file_url}")
+
+                    # Handle external link
+                    if 'link' in next_level:
+                        link = next_level.get('link')
+                        if link and isinstance(link, str):
+                            keyboard = [[InlineKeyboardButton("📎 فتح الرابط", url=link)]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            await update.message.reply_text(
+                                f"رابط: {link}", 
+                                reply_markup=reply_markup, 
+                                parse_mode='HTML'
+                            )
+
+                    # Handle external list of links
+                    if 'links' in next_level:
+                        links = next_level.get('links', [])
+                        # Filter out empty or invalid links
+                        valid_links = [link for link in links if link and isinstance(link, str)]
+                        if valid_links:
+                            joined_links = '\n\n'.join(valid_links)
+                            await update.message.reply_text(
+                                f"تدريبات خارجية:\n{joined_links}", 
+                                parse_mode='HTML'
+                            )
+
+                    # If it's a submenu, navigate into it
+                    if isinstance(next_level, dict) and any(
+                        isinstance(val, dict) for val in next_level.values()
+                    ):
+                        current_path.append(text)
+
+                    # Don't send menu name if a file was sent
+                    if file_sent:
+                        return NAVIGATING_MENU
+
+            # Get the current menu level after navigation
+            current_menu = BotManager.get_menu_item(menu_structure, current_path)
+
+            if current_menu:
+                await update.message.reply_text(
+                    f"قائمة {current_path[-1] if current_path else 'الرئيسية'}:",
+                    reply_markup=BotManager.get_keyboard_for_menu(current_menu)
+                )
+            else:
+                await update.message.reply_text("الرجاء اختيار خيار صحيح.")
+
             return NAVIGATING_MENU
 
-        current_path = user_states[user_id]
-        menu_structure = BotManager.load_menu_structure()
-
-        if text == "🔙 رجوع":
-            if current_path:
-                current_path.pop()
-        else:
-            current_menu = BotManager.get_menu_item(
-                menu_structure, current_path)
-
-            if current_menu and text in current_menu:
-                next_level = current_menu[text]
-                print('next_level, ', next_level)
-                file_sent = False  # Flag to track if a file was sent
-
-                # Handle multiple files
-                if 'file_ids' in next_level:
-                    files = next_level['file_ids']
-                    print('DALIA :::: files', files)
-                    for file_metadata in files:
-                        file_url = file_metadata['file_id']
-                        file_type = file_metadata.get('type', None)
-                        custom_filename = file_metadata.get('filename', None)
-                        success = await FileHandler.send_file(update, file_url, '', file_type, custom_filename)
-                        if success:
-                            file_sent = True
-
-                # Handle single file
-                elif 'file_id' in next_level:
-                    file_url = next_level['file_id']
-                    print('DALIA :::: file_url', file_url)
-                    file_type = next_level.get('type', None)
-                    custom_filename = next_level.get('filename', None)
-                    success = await FileHandler.send_file(update, file_url, '', file_type, custom_filename)
-                    if success:
-                        file_sent = True
-
-                # Handle external link
-                if 'link' in next_level:
-                    link = next_level['link']
-                    keyboard = [
-                        [InlineKeyboardButton("📎 فتح الرابط", url=link)]]
-                    reply_markup = InlineKeyboardMarkup(keyboard)
-                    await update.message.reply_text(f"رابط: {link}", reply_markup=reply_markup, parse_mode='HTML')
-
-                # Handle external list of links
-                if 'links' in next_level:
-                    links = next_level['links']
-                    joined_links = '\n\n'.join(links)
-                    await update.message.reply_text(f"تدريبات خارجية:\n{joined_links}", parse_mode='HTML')
-
-                # If it's a submenu, navigate into it
-                if any(isinstance(val, dict) for val in next_level.values()):
-                    current_path.append(text)
-
-                # **Do not send menu name if a file was sent**
-                if file_sent:
-                    return NAVIGATING_MENU
-
-        # Get the current menu level after navigation
-        current_menu = BotManager.get_menu_item(menu_structure, current_path)
-
-        if current_menu:
-            await update.message.reply_text(
-                f"قائمة {current_path[-1] if current_path else 'الرئيسية'}:",
-                reply_markup=BotManager.get_keyboard_for_menu(current_menu)
-            )
-        else:
-            await update.message.reply_text("الرجاء اختيار خيار صحيح.")
-
-        return NAVIGATING_MENU
-
+        except Exception as e:
+            logging.error(f"Error in handle_menu_navigation: {e}")
+            await update.message.reply_text("حدث خطأ. الرجاء المحاولة مرة أخرى.")
+            return NAVIGATING_MENU
+        
     @staticmethod
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
         """Handle the return to main menu command."""

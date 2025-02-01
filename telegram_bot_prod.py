@@ -7,7 +7,7 @@ import tempfile
 # import shutil
 
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, CallbackQueryHandler
+from telegram.ext import Application, ContextTypes, CommandHandler, MessageHandler, filters, CallbackContext, CallbackQueryHandler
 
 import logging
 import json
@@ -96,7 +96,7 @@ class FileHandler:
     TEMP_DIR = Path(tempfile.mkdtemp(prefix='telegram_bot_'))
 
     @staticmethod
-    def cleanup_temp_files(max_age_hours: int = 24):
+    def cleanup_temp_files(max_age_hours: int = 24*30):
         """
         Clean up temporary files older than the specified hours.
 
@@ -208,98 +208,74 @@ class FileHandler:
 
     @staticmethod
     async def send_file(
-        update,
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE,
         file_url: str,
         description: str = '',
         file_type: Optional[str] = None,
         custom_filename: Optional[str] = None,
         supabase_key: Optional[str] = None
     ) -> bool:
-        """
-        Send a file from a given URL
-
-        :param update: Telegram update object
-        :param file_url: URL of the file to send
-        :param description: Optional description for the file
-        :param file_type: Optional file type (audio, document, etc.)
-        :param custom_filename: Optional custom filename to use
-        :param supabase_key: Optional Supabase API key
-        :return: True if file sent successfully, False otherwise
-        """
         try:
-            # Send a "downloading" message
+            # Notify user that the file is being downloaded
             downloading_message = await update.message.reply_text("جاري تحميل الملف...")
-
-            # Download the file
+            print('file_url ==> ', file_url)
+            # Download the file (call your download logic here)
             file_content = await FileHandler.download_file(
                 file_url,
+                timeout=600,  # Increased timeout for large files
                 supabase_key=supabase_key
             )
 
             if file_content:
-                # Remove token and query parameters to get clean filename
+                logging.info(
+                    f"Successfully downloaded file of size {len(file_content)} bytes")
+
                 clean_url = file_url.split('?')[0]
 
-                # Determine file extension
+                # Determine file type if not provided
                 if not file_type:
-                    # Try to guess file type from URL
-                    if clean_url.lower().endswith(('.mp3', '.m4a', '.mp4', '.wav', '.ogg')):
-                        file_type = 'audio'
-                    elif clean_url.lower().endswith(('.pdf', '.doc', '.docx', '.txt')):
-                        file_type = 'document'
-                    else:
-                        file_type = 'document'
-
-                if file_type == 'audio':
-                    file_ext = '.m4a'
-                else:
-                    file_ext = os.path.splitext(clean_url)[1] or '.pdf'
+                    file_type = 'document'  # Default type if not specified
 
                 # Determine file extension
                 file_ext = os.path.splitext(clean_url)[1] or '.pdf'
 
-                # Use custom filename if provided, otherwise generate a temp filename
+                # Generate filename for temporary storage
                 user_id = update.effective_user.id
-                if custom_filename:
-                    # Ensure the filename has the correct extension
-                    if not custom_filename.lower().endswith(file_ext):
-                        custom_filename += file_ext
-                    temp_file_path = FileHandler.TEMP_DIR / custom_filename
-                else:
-                    temp_file_path = FileHandler.TEMP_DIR / \
-                        f"{user_id}_temp{file_ext}"
+                temp_file_path = FileHandler.TEMP_DIR / \
+                    f"{user_id}_temp{file_ext}"
 
-                # Write file content
+                # Save the file
                 with open(temp_file_path, 'wb') as temp_file:
                     temp_file.write(file_content)
 
-                # Send the file based on type
+                # Send the file to the user with extended timeout
                 with open(temp_file_path, 'rb') as file:
-                    if file_type == 'audio':
-                        await update.message.reply_audio(
-                            audio=file,
-                            # caption=description,
-                            parse_mode='HTML'
-                        )
-                    else:
-                        await update.message.reply_document(
-                            document=file,
-                            # caption=description,
-                            parse_mode='HTML'
-                        )
+                    await context.bot.send_chat_action(
+                        chat_id=update.message.chat_id, action="upload_document"
+                    )
+                    await asyncio.sleep(2)  # Small delay to avoid rate limits
 
-                # Delete temporary message and delete file afterwards
+                    # Send the file
+                    await update.message.reply_document(
+                        document=file,
+                        caption=description,
+                        read_timeout=300  # Increased timeout for sending large files
+                    )
+
+                # Delete temporary message and file after sending
                 await downloading_message.delete()
                 temp_file_path.unlink()
 
                 return True
             else:
-                # Edit the downloading message to show an error
+                logging.error("Failed to download file content")
                 await downloading_message.edit_text("تعذر تحميل الملف. يرجى المحاولة مرة أخرى.")
                 return False
+
         except Exception as e:
             logging.error(f"Error sending file: {e}")
-            # await update.message.reply_text("حدث خطأ أثناء إرسال الملف.")
+            await update.message.reply_text("حدث خطأ أثناء إرسال الملف.")
             return False
 
 
@@ -356,15 +332,18 @@ class TelegramBot:
             if current_path:
                 current_path.pop()
         else:
-            current_menu = BotManager.get_menu_item(menu_structure, current_path)
+            current_menu = BotManager.get_menu_item(
+                menu_structure, current_path)
 
             if current_menu and text in current_menu:
                 next_level = current_menu[text]
+                print('next_level, ', next_level)
                 file_sent = False  # Flag to track if a file was sent
 
                 # Handle multiple files
                 if 'file_ids' in next_level:
                     files = next_level['file_ids']
+                    print('DALIA :::: files', files)
                     for file_metadata in files:
                         file_url = file_metadata['file_id']
                         file_type = file_metadata.get('type', None)
@@ -376,6 +355,7 @@ class TelegramBot:
                 # Handle single file
                 elif 'file_id' in next_level:
                     file_url = next_level['file_id']
+                    print('DALIA :::: file_url', file_url)
                     file_type = next_level.get('type', None)
                     custom_filename = next_level.get('filename', None)
                     success = await FileHandler.send_file(update, file_url, '', file_type, custom_filename)
@@ -385,7 +365,8 @@ class TelegramBot:
                 # Handle external link
                 if 'link' in next_level:
                     link = next_level['link']
-                    keyboard = [[InlineKeyboardButton("📎 فتح الرابط", url=link)]]
+                    keyboard = [
+                        [InlineKeyboardButton("📎 فتح الرابط", url=link)]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     await update.message.reply_text(f"رابط: {link}", reply_markup=reply_markup, parse_mode='HTML')
 
@@ -415,7 +396,6 @@ class TelegramBot:
             await update.message.reply_text("الرجاء اختيار خيار صحيح.")
 
         return NAVIGATING_MENU
-
 
     @staticmethod
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:

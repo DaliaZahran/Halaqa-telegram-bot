@@ -3,3 +3,4 @@ requests==2.28.1
 aiohttp
 python-dotenv
 oci==2.90.0
+asyncpg

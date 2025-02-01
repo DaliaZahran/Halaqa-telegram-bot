@@ -309,12 +309,6 @@ class TelegramBot:
         """Handle the /start command."""
         user_id = update.effective_user.id
 
-        # Delete the start command message
-        try:
-            await update.message.delete()
-        except Exception as e:
-            logging.error(f"Could not delete start command message: {e}")
-
         # Reset user state to root menu
         user_states[user_id] = []
 
@@ -338,12 +332,6 @@ class TelegramBot:
         """Handle menu navigation and file sending."""
         user_id = update.effective_user.id
         text = update.message.text
-
-        # Delete the user's original message
-        try:
-            await update.message.delete()
-        except Exception as e:
-            logging.error(f"Could not delete user's message: {e}")
 
         # Ensure user states exist
         if user_id not in user_states:
@@ -455,12 +443,6 @@ class TelegramBot:
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
         """Handle the return to main menu command."""
         user_id = update.effective_user.id
-
-        # Delete the main menu command message
-        try:
-            await update.message.delete()
-        except Exception as e:
-            logging.error(f"Could not delete main menu command message: {e}")
 
         # Reset user state to root menu
         user_states[user_id] = []

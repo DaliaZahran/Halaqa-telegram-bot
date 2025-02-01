@@ -146,7 +146,7 @@ class FileHandler:
     @staticmethod
     async def download_file(
         file_url: str,
-        timeout: int = 180,
+        timeout: int = 300,
         supabase_key: Optional[str] = None
     ) -> Optional[bytes]:
         """
@@ -342,13 +342,8 @@ class TelegramBot:
             user_states[user_id] = []
             menu_structure = BotManager.load_menu_structure()
 
-            welcome_message = (
-                "🌟 تم العودة إلى القائمة الرئيسية\n"
-                "يمكنك اختيار القسم المطلوب من القائمة أدناه"
-            )
-
             await update.message.reply_text(
-                welcome_message,
+                "🌟 تم العودة إلى القائمة الرئيسية\nيمكنك اختيار القسم المطلوب من القائمة أدناه",
                 reply_markup=BotManager.get_keyboard_for_menu(menu_structure),
                 parse_mode='HTML'
             )
@@ -358,86 +353,69 @@ class TelegramBot:
         menu_structure = BotManager.load_menu_structure()
 
         if text == "🔙 رجوع":
-            # Go back one level
             if current_path:
                 current_path.pop()
         else:
-            # Get current menu level
-            current_menu = BotManager.get_menu_item(
-                menu_structure, current_path)
+            current_menu = BotManager.get_menu_item(menu_structure, current_path)
 
             if current_menu and text in current_menu:
                 next_level = current_menu[text]
+                file_sent = False  # Flag to track if a file was sent
 
-                # If the item is a dictionary with 'file_id', it's a document to send
-                if isinstance(next_level, dict):
-                    # Check for file
-                    if 'file_id' in next_level:
-                        file_url = next_level['file_id']
-                        description = next_level.get('description', '')
-                        file_type = next_level.get('type', None)
-                        custom_filename = next_level.get('filename', None)
+                # Handle multiple files
+                if 'file_ids' in next_level:
+                    files = next_level['file_ids']
+                    for file_metadata in files:
+                        file_url = file_metadata['file_id']
+                        file_type = file_metadata.get('type', None)
+                        custom_filename = file_metadata.get('filename', None)
+                        success = await FileHandler.send_file(update, file_url, '', file_type, custom_filename)
+                        if success:
+                            file_sent = True
 
-                        # Attempt to send the file
-                        await FileHandler.send_file(
-                            update,
-                            file_url,
-                            description,
-                            file_type,
-                            custom_filename
-                        )
+                # Handle single file
+                elif 'file_id' in next_level:
+                    file_url = next_level['file_id']
+                    file_type = next_level.get('type', None)
+                    custom_filename = next_level.get('filename', None)
+                    success = await FileHandler.send_file(update, file_url, '', file_type, custom_filename)
+                    if success:
+                        file_sent = True
 
-                    # Check for external link
-                    if 'link' in next_level:
-                        link = next_level['link']
-                        description = next_level.get('description', '')
+                # Handle external link
+                if 'link' in next_level:
+                    link = next_level['link']
+                    keyboard = [[InlineKeyboardButton("📎 فتح الرابط", url=link)]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    await update.message.reply_text(f"رابط: {link}", reply_markup=reply_markup, parse_mode='HTML')
 
-                        # Create an inline keyboard with the link
-                        keyboard = [
-                            [InlineKeyboardButton(
-                                "📎 فتح الرابط",
-                                url=link
-                            )]
-                        ]
-                        reply_markup = InlineKeyboardMarkup(keyboard)
+                # Handle external list of links
+                if 'links' in next_level:
+                    links = next_level['links']
+                    joined_links = '\n\n'.join(links)
+                    await update.message.reply_text(f"تدريبات خارجية:\n{joined_links}", parse_mode='HTML')
 
-                        # Send message with link
-                        await update.message.reply_text(
-                            f"{description}\n\nرابط: {link}",
-                            reply_markup=reply_markup,
-                            parse_mode='HTML'
-                        )
+                # If it's a submenu, navigate into it
+                if any(isinstance(val, dict) for val in next_level.values()):
+                    current_path.append(text)
 
-                    # Check for external list of links
-                    if 'links' in next_level:
-                        links = next_level['links']
-                        description = next_level.get('description', '')
-                        joined_links = '\n\n'.join(links)
-
-                        # Send message with link
-                        await update.message.reply_text(
-                            f"{description}\nتدريبات خارجية: {joined_links}",
-                            parse_mode='HTML'
-                        )
-
-                    # If it's a submenu, navigate into it
-                    if any(isinstance(val, dict) for val in next_level.values()):
-                        current_path.append(text)
+                # **Do not send menu name if a file was sent**
+                if file_sent:
+                    return NAVIGATING_MENU
 
         # Get the current menu level after navigation
         current_menu = BotManager.get_menu_item(menu_structure, current_path)
 
         if current_menu:
-            # Generate menu title
-            menu_title = f"قائمة {current_path[-1] if current_path else 'الرئيسية'}:"
             await update.message.reply_text(
-                menu_title,
+                f"قائمة {current_path[-1] if current_path else 'الرئيسية'}:",
                 reply_markup=BotManager.get_keyboard_for_menu(current_menu)
             )
         else:
             await update.message.reply_text("الرجاء اختيار خيار صحيح.")
 
         return NAVIGATING_MENU
+
 
     @staticmethod
     async def return_to_main_menu(update: Update, context: CallbackContext) -> int:
@@ -469,8 +447,9 @@ def main() -> None:
     FileHandler.cleanup_temp_files()
 
     # Create the Application and pass it your bot's token
-    application = Application.builder().token(TOKEN).build()
-
+    # application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(
+        '7063300350:AAFTn_UAxLXkn1KSV_MBiTrlX6vHg3Qk7q0').build()
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
     application.add_handler(CommandHandler(

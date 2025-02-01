@@ -469,28 +469,64 @@
     },
     "العنكبوت": {
       "المقدمة + المقطع الأول(1-13)": {
-        "file_id": "https://drive.google.com/file/d/1J8Cm1waw5pSxgLitGQR3GErKW7V4Cuqs/view?usp=drive_link",
         "description": "1- باوربوينت- المقدمة + المقطع الأول.pdf",
-        "type": "document",
-        "filename": "1- باوربوينت- المقدمة + المقطع الأول"
+        "file_ids": [
+          {
+            "file_id": "https://drive.google.com/file/d/1J8Cm1waw5pSxgLitGQR3GErKW7V4Cuqs/view?usp=drive_link",
+            "type": "document",
+            "filename": "1- باوربوينت- المقدمة + المقطع الأول"
+          },
+          {
+            "file_id": "https://drive.google.com/file/d/18-KUjm36HWJnw7nT9vwGzppHZvjufut1/view?usp=drive_link",
+            "type": "document",
+            "filename": "1- شرح المقطع الأول"
+          }
+        ]
       },
       "المقطع الثاني (14-40)": {
-        "file_id": "https://drive.google.com/file/d/1Lco3LqKwPFAKJtXe-2I70QjDpP3IUh_M/view?usp=drive_link",
         "description": "المقطع الثاني (14-40)",
-        "type": "document",
-        "filename": "سورة العنكبوت - المقطع الثاني - باوربوينت"
+        "file_ids": [
+          {
+            "file_id": "https://drive.google.com/file/d/1Lco3LqKwPFAKJtXe-2I70QjDpP3IUh_M/view?usp=drive_link",
+            "type": "document",
+            "filename": "سورة العنكبوت - المقطع الثاني - باوربوينت"
+          },
+          {
+            "file_id": "https://drive.google.com/file/d/1MlObARFVrQC0rS11vxpkx0u7k0qx3xyz/view?usp=drive_link",
+            "type": "document",
+            "filename": "1- شرح المقطع الأول"
+          }
+        ]
       },
       "المقطع الثالث (41-55)": {
-        "file_id": "https://drive.google.com/file/d/1fPGerjgrajVI0RCyUhqH15veFsNyDtGg/view?usp=drive_link",
         "description": "المقطع الثالث (41-55)",
-        "type": "document",
-        "filename": "سورة العنكبوت - المقطع الثالث - باوربوينت"
+        "file_ids": [
+          {
+            "file_id": "https://drive.google.com/file/d/1fPGerjgrajVI0RCyUhqH15veFsNyDtGg/view?usp=drive_link",
+            "type": "document",
+            "filename": "سورة العنكبوت - المقطع الثالث - باوربوينت"
+          },
+          {
+            "file_id": "https://drive.google.com/file/d/1m9yNOquDVbNKHz2nBjV1RuPyvq_kQOJ-/view?usp=drive_link",
+            "type": "document",
+            "filename": "3- شرح المقطع الثالث.pdf"
+          }
+        ]
       },
       "المقطع الرابع (56-نهاية السورة)": {
-        "file_id": "https://drive.google.com/file/d/1rvJ2g9UmwStbQYcQvA9Zoq94azwd5Lei/view?usp=drive_link",
         "description": "المقطع الرابع (56-نهاية السورة)",
-        "type": "document",
-        "filename": "العنكبوت_المقطع_الرابع"
+        "file_ids": [
+          {
+            "file_id": "https://drive.google.com/file/d/1rvJ2g9UmwStbQYcQvA9Zoq94azwd5Lei/view?usp=drive_link",
+            "type": "document",
+            "filename": "العنكبوت_المقطع_الرابع"
+          },
+          {
+            "file_id": "https://drive.google.com/file/d/1uYhXvrChKYYSjvLmKBhbZepfAOelVfLR/view?usp=drive_link",
+            "type": "document",
+            "filename": "4- شرح المقطع الرابع.pdf"
+          }
+        ]
       }
     }
   }

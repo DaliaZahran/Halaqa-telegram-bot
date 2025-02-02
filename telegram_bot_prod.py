@@ -249,17 +249,32 @@ class FileHandler:
 
                 clean_url = file_url.split('?')[0]
 
-                # Determine file type if not provided
+              # Determine file extension
                 if not file_type:
-                    file_type = 'document'  # Default type if not specified
+                    # Try to guess file type from URL
+                    if clean_url.lower().endswith(('.mp3', '.m4a', '.mp4', '.wav', '.ogg')):
+                        file_type = 'audio'
+                    elif clean_url.lower().endswith(('.pdf', '.doc', '.docx', '.txt')):
+                        file_type = 'document'
+                    else:
+                        file_type = 'document'
 
-                # Determine file extension
-                file_ext = os.path.splitext(clean_url)[1] or '.pdf'
+                if file_type == 'audio':
+                    file_ext = '.m4a'
+                else:
+                    file_ext = os.path.splitext(clean_url)[1] or '.pdf'
+
 
                 # Generate filename for temporary storage
                 user_id = update.effective_user.id
-                temp_file_path = FileHandler.TEMP_DIR / \
-                    f"{user_id}_temp{file_ext}"
+                if custom_filename:
+                    # Ensure the filename has the correct extension
+                    if not custom_filename.lower().endswith(file_ext):
+                        custom_filename += file_ext
+                    temp_file_path = FileHandler.TEMP_DIR / custom_filename
+                else:
+                    temp_file_path = FileHandler.TEMP_DIR / \
+                        f"{user_id}_temp{file_ext}"
 
                 # Save the file
                 with open(temp_file_path, 'wb') as temp_file:
@@ -485,7 +500,7 @@ def main() -> None:
 
     # Create the Application and pass it your bot's token
     application = Application.builder().token(TOKEN).build()
-    
+
     # Set up command and message handlers
     application.add_handler(CommandHandler('start', TelegramBot.start))
     application.add_handler(CommandHandler(

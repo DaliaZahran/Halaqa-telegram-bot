@@ -146,6 +146,38 @@
         "type": "document",
         "filename": "الوقف على الكلمة القرآنية المشددة"
       }
+    },
+    "المدود":{
+      "الشرح": {
+        "file_id": "https://drive.google.com/file/d/1KLh3phat_qmzCTrom1r8GD767_Q7pajW/view?usp=drive_link",
+        "description": "المدود_كاملة",
+        "type": "document",
+        "filename": "المدود_كاملة.pdf"
+      },
+      "تدريبات": {
+        "links": [
+          "https://docs.google.com/forms/d/e/1FAIpQLScyCjR3arm4pd4ahFkymh_t6oGv6-a_mWdA3X9rtwul5H6Dvg/viewform?usp=sharing",
+          "https://wordwall.net/resource/83586377",
+          "https://wordwall.net/resource/83966396",
+          "https://wordwall.net/resource/83966577"
+        ]
+      }
+    },
+    "علاقات الحروف": {
+      "الشرح": {
+        "file_id": "https://drive.google.com/file/d/1x-c9Ldl2H6sUDhyNGdzFTwi8Ywa58jA8/view?usp=drive_link",
+        "description": "علاقات الحروف",
+        "type": "document",
+        "filename": "علاقات الحروف.pdf"
+      }
+    },
+    "التقاء الساكنين": {
+      "الشرح": {
+        "file_id": "https://drive.google.com/file/d/1vLQSDCj4tTUQ6B8AnehMzk7OEenJ-Ths/view?usp=drive_link",
+        "description": "التقاء الساكنين",
+        "type": "document",
+        "filename": "التقاء الساكنين.pdf"
+      }
     }
   },
   "حلقات التدبر": {
@@ -579,6 +611,70 @@
           }
         ]
       }
+    },
+    "جزء الأحقاف":{
+      "1- سورة ق": {
+          "file_id": "https://drive.google.com/file/d/15ojWyoiuUXWfm08eAfa0eU5p-3_o8d5E/view?usp=drive_link",
+          "description": "سورة ق - كاملة",
+          "type": "document",
+          "filename": "سورة ق - كامله.pdf"
+      },
+     "2- سورة الحجرات": {
+        "file_id": "https://drive.google.com/file/d/1czAKONSrCLxGz4CCVkaWuwCz9ind-S7I/view?usp=drive_link",
+        "description": "سورة الحجرات - كامله",
+        "type": "document",
+        "filename": "سورة الحجرات - كاملة.pdf"
+    },
+    "3- سورة الفتح" :{
+      "file_id": "https://drive.google.com/file/d/1mxQeD8DmDLi0D7imYISDZZlz6T0xhW8l/view?usp=drive_link",
+      "description": "سورة الفتح كاملة",
+      "type": "document",
+      "filename": "سورة الفتح كاملة.pdf"
+    }
+    },
+    "جزء الذاريات":{
+     "1- سورة الذاريات": {
+        "file_id": "https://drive.google.com/file/d/1VufYveEGT96SV-NyTRKSZBiKScOuHDEW/view?usp=drive_link",
+        "description": "سورة الذاريات كاملة",
+        "type": "document",
+        "filename": "سورة الذاريات كاملة .pdf"
+    },
+   "2- سورة الطور": {
+      "file_id": "https://drive.google.com/file/d/1xf1g9J0GZkoLVDB1HIK5rIlQJ-Gg1zjy/view?usp=drive_link",
+      "description": "سورة الطور - كاملة",
+      "type": "document",
+      "filename": "سورة الطور - كاملة.pdf"
+  },
+  "3- سورة النجم": {
+      "file_id": "https://drive.google.com/file/d/1HaNdJVh01JECX6_CQs1p9IDE6FSnsqFe/view?usp=drive_link",
+      "description": "سورة النجم كاملة",
+      "type": "document",
+      "filename": "سورة النجم كاملة.pdf"
+  },
+ "4- سورة القمر":{
+      "file_id": "https://drive.google.com/file/d/1ztVkU3SJgRGNReTpreB9Gp44VmpnUP9c/view?usp=drive_link",
+      "description": "سورة القمر كاملة",
+      "type": "document",
+      "filename": "سورة القمر كاملة.pdf"
+  },
+ "5- سورة الرحمن":{
+      "file_id": "https://drive.google.com/file/d/1uOiWUcMQMuq7dReH9H9C5rECnQYsXlVY/view?usp=drive_link",
+      "description": "سورة الرحمن كاملة",
+      "type": "document",
+      "filename": "سورة الرحمن كاملة.pdf"
+  },
+ "6- سورة الواقعة": {
+      "file_id": "https://drive.google.com/file/d/1TGtCukEeh2rhCATV4_PelJKQZWT2dvhi/view?usp=drive_link",
+      "description": "سورة الواقعة",
+      "type": "document",
+      "filename": "6- سورة الواقعة.pdf"
+  },
+ "7- سورة الحديد": {
+      "file_id": "https://drive.google.com/file/d/14ZXVB-usAEsopsjs4uUc4C1lP_gFm9PR/view?usp=drive_link",
+      "description": "سورة الحديد كاملة.pdf",
+      "type": "document",
+      "filename": "سورة الحديد كاملة.pdf"
+  }
     }
   }
 }

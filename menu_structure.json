@@ -177,6 +177,11 @@
         "description": "التقاء الساكنين",
         "type": "document",
         "filename": "التقاء الساكنين.pdf"
+      },
+      "تدريبات": {
+        "links": [
+         "https://forms.gle/f38VSQpkbzm7DK9v8"
+        ]
       }
     }
   },

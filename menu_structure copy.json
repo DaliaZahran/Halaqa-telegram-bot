@@ -1,0 +1,100 @@
+{
+  "تجويد": {
+    "السواكن": {
+      "أحكام النون الساكنة والتنوين": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/13FTldrOAi367emDHv2heq39ZWSDDNnQB/view?usp=drive_link",
+          "description": "شرح درس النون الساكنة والتنوين",
+          "type": "document",
+          "filename": "شرح أحكام النون الساكنة والتنوين"
+        },
+        "تدريبات": {
+          "links": [
+            "https://wordwall.net/resource/63848077/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-1",
+            "https://wordwall.net/resource/63849983/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-2",
+
+            ""
+          ]
+        }
+      },
+      "أحكام الميم الساكنة": {
+        "الشرح": {
+          "file_id": "https://drive.google.com/file/d/1IHJ1X8xOR2cUGQJnyBjITN-yr_jXpw15/view?usp=drive_link",
+          "description": "شرح درس الميم الساكنة",
+          "type": "document",
+          "filename": "شرح أحكام الميم الساكنة"
+        },
+        "تدريبات": {
+          "links": [
+            "https://wordwall.net/resource/65920894/%d9%88%d8%b1%d8%b4%d8%a9-%d8%b9%d9%85%d9%84-%d8%a7%d9%84%d9%85%d9%8a%d9%85-%d8%a7%d9%84%d8%b3%d8%a7%d9%83%d9%86%d8%a9"
+          ],
+          "description": ""
+        }
+      },
+      "تدريبات عامة": {
+        "جوجل فورم": {
+          "link": "https://forms.gle/59YyVmRJosSCPTf3A",
+          "description": "تدريب على أحكام النون الساكنة والتنوين والميم الساكنة",
+          "type": "link"
+        },
+        "تدريبات خارجية": {
+          "links": [
+            "https://wordwall.net/resource/64099884/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8%d8%a7%d8%aa-1",
+            "https://wordwall.net/resource/64101709/%d8%aa%d8%af%d8%b1%d9%8a%d8%a8-2"
+          ]
+        }
+      }
+    }
+  },
+  "حلقات التدبر": {
+    "البقرة": {
+      "الجزء الأول": {
+        "2": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1T5idZh-AJ8o0OjsuUKG8UH6FU7qS3BsO/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 2",
+            "type": "document",
+            "filename": "سورة البقرة - ص 2"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/1RPZH9eYSQ8l3_UXqhPVTttS902pC0R3t/view?usp=drive_link",
+            "type": "audio",
+            "filename": "2 - الشيخ الحصري.m4a"
+          }
+        }
+      },
+      "الجزء الثاني": {
+        "22": {
+          "الشرح": {
+            "file_id": "https://drive.google.com/file/d/1agOJwYd3HLrp1AU8y4cv-2F_vR25i-1W/view?usp=drive_link",
+            "description": "شرح سورة البقرة - ص 22",
+            "type": "document",
+            "filename": "سورة البقرة - ص 22"
+          },
+          "تسجيل الصفحة": {
+            "file_id": "https://drive.google.com/file/d/179dK_dMcPRaqI1tmZpkaU3oeroGkxEBU/view?usp=drive_link",
+            "type": "audio",
+            "filename": "22 - الشيخ الحصري.m4a"
+          }
+        }
+      }
+    },
+    "العنكبوت": {
+      "المقدمة + المقطع الأول(1-13)": {
+        "description": "1- باوربوينت- المقدمة + المقطع الأول",
+        "file_ids": [
+          {
+            "file_id": "https://drive.google.com/file/d/1J8Cm1waw5pSxgLitGQR3GErKW7V4Cuqs/view?usp=drive_link",
+            "type": "document",
+            "filename": "1- باوربوينت- المقدمة + المقطع الأول"
+          },
+          {
+            "file_id": "https://drive.google.com/file/d/18-KUjm36HWJnw7nT9vwGzppHZvjufut1/view?usp=drive_link",
+            "type": "document",
+            "filename": "1- شرح المقطع الأول"
+          }
+        ]
+      }
+    }
+  }
+}

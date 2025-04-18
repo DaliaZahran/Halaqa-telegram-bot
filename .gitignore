@@ -5,3 +5,4 @@ __pycache__
 telegram_bot_env
 v*_dtelegram_bot.py
 .env
+node_modules

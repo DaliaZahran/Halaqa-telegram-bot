@@ -4,3 +4,4 @@ aiohttp
 python-dotenv
 oci==2.90.0
 asyncpg
+pandas

@@ -499,7 +499,9 @@ def main() -> None:
     FileHandler.cleanup_temp_files()
 
     # Create the Application and pass it your bot's token
-    application = Application.builder().token(TOKEN).build()
+    # application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(
+        '7063300350:AAFTn_UAxLXkn1KSV_MBiTrlX6vHg3Qk7q0').build()
 
 
     # Set up command and message handlers

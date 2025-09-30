@@ -30,6 +30,26 @@ from telegram.ext import (
     CallbackContext
 )
 
+from threading import Thread
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b'OK')
+    
+    def log_message(self, format, *args):
+        pass  # Suppress logs
+
+def run_health_server():
+    server = HTTPServer(('0.0.0.0', 8000), HealthCheckHandler)
+    server.serve_forever()
+
+# Start health check server in background
+Thread(target=run_health_server, daemon=True).start()
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -740,7 +760,9 @@ def main() -> None:
     FileHandler.cleanup_temp_files()
 
     # Create the Application and pass it your bot's token
-    application = Application.builder().token(TOKEN).build()
+    # application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(
+        '7063300350:AAFTn_UAxLXkn1KSV_MBiTrlX6vHg3Qk7q0').build()
 
     # Create bot instance
     bot = TelegramBot()
